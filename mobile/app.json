@@ -19,7 +19,9 @@
     "android": {
       "package": "com.redstring.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png",
         "backgroundColor": "#0A0A0C"
       },
       "permissions": [
@@ -45,7 +47,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/notification-icon.png",
+          "icon": "./assets/android-icon-foreground.png",
           "color": "#F5C842"
         }
       ]
