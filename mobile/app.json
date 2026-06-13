@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "RedString",
+    "slug": "redstring",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png",
+    "backgroundColor": "#0A0A0C",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.redstring.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "RedString uses your microphone for War Room voice chat with other investigators.",
+        "NSCameraUsageDescription": "RedString may use your camera for AR evidence scanning features."
+      }
+    },
+    "android": {
+      "package": "com.redstring.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0A0A0C"
+      },
+      "permissions": [
+        "RECORD_AUDIO",
+        "NOTIFICATIONS",
+        "VIBRATE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "backgroundColor": "#0A0A0C",
+          "imageWidth": 200
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#F5C842"
+        }
+      ]
+    ]
+  }
+}
