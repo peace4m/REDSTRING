@@ -1,5 +1,5 @@
 /**
- * CrimeSolve — Seed Case: "The Midnight Conductor"
+ * Redstring — Seed Case: "The Midnight Conductor"
  * ==================================================
  * A MEDIUM-difficulty murder case (R-rated).
  * Duration: 72 real-world hours (3 days)
@@ -44,7 +44,7 @@ module.exports = {
     briefingText: `
     At 11:47 PM on Friday, Victor Hale — the celebrated conductor of the
     Vienna Metropolitan Orchestra — was found unresponsive in his private
-    dressing room backstage at the Goldener Saal concert hall.
+    dressing room backstage at the Goldener Sail concert hall.
 
     Emergency services declared him dead at the scene. Initial assessment
     suggests cardiac arrest. He was 58 years old and reportedly in good health.
@@ -138,7 +138,7 @@ module.exports = {
             age:          47,
             occupation:   'Stage Manager, VMO',
             relationship: 'Long-time employee, recent conflict',
-            avatarKey:    'male_middleaged_1',
+            avatarKey:    'male_middleware_1',
             motive:       'Victor threatened to fire him after 19 years over a lighting rig incident',
             isRealCulprit: false,
             personality: {
@@ -253,7 +253,7 @@ module.exports = {
         },
         {
             sceneId:        'scene_concert_hall',
-            name:           'The Goldener Saal — Backstage',
+            name:           'The Goldener Sail — Backstage',
             description:    'The grand backstage corridor leading to the main stage. Stage rigging above. Prop storage to the left.',
             environmentKey: 'env_concert_hall_backstage_01',
             unlocksAt:      null,
@@ -425,14 +425,14 @@ module.exports = {
             clueId:         'clue_shell_account',
             parentClueId:   'clue_fund_ledger',
             label:          'Shell account — beneficial owner traced',
-            description:    'Financial forensics (48hr lab turnaround) trace the "Administrative Fees" to a shell company — Halecroft Partners Ltd — whose sole beneficial owner is Victor Hale.',
+            description:    'Financial forensics (48hr lab turnaround) trace the "Administrative Fees" to a shell company — Hale croft Partners Ltd — whose sole beneficial owner is Victor Hale.',
             location:       'scene_archive',
             type:           'forensic',
             isRedHerring:   false,
             pointsToSuspect: null,
             requiresLabWork: true,
             labResultDelay:  480,
-            labResultText:   'Halecroft Partners Ltd. registered 2019, Gibraltar. Sole director and beneficial owner: Victor William Hale, DOB 12/03/1966. Total inflows: €183,420 over 4 years.',
+            labResultText:   'Hale croft Partners Ltd. registered 2019, Gibraltar. Sole director and beneficial owner: Victor William Hale, DOB 12/03/1966. Total inflows: €183,420 over 4 years.',
             weatherSensitive: false,
         },
         {
@@ -471,7 +471,7 @@ module.exports = {
             requiresLabWork: false,
             weatherSensitive: false,
         },
-        // Weather-sensitive clue — exists only if scene is accessed early (before rain)
+        // Weather-sensitive clue — exists only if a scene is accessed early (before rain)
         {
             clueId:         'clue_elena_coat',
             parentClueId:   null,
@@ -506,7 +506,7 @@ module.exports = {
         The concert hall is resealed. Every person backstage is now a suspect.
       `,
             triggerType:  'lab_result_received',
-            triggerId:    'clue_whiskey_flask',  // fires when flask lab result comes in
+            triggerId:    'clue_whiskey_flask',  // fires when a flask lab result comes in
             effects: {
                 newSuspectUnlocked:   null,
                 newSceneUnlocked:     'scene_archive',  // archive access granted after murder confirmed
@@ -595,10 +595,10 @@ module.exports = {
         {
             timerId:     'timer_shell_account',
             label:       'Financial Forensics — Shell Company Trace',
-            description: 'International financial investigation into Halecroft Partners Ltd.',
+            description: 'International financial investigation into Hale croft Partners Ltd.',
             resultClueId:'clue_shell_account',
             notificationTitle: '💰 Financial Trace Complete',
-            notificationBody:  'The beneficial owner of Halecroft Partners has been identified. The fund\'s money has been followed.',
+            notificationBody:  'The beneficial owner of Hale croft Partners has been identified. The fund\'s money has been followed.',
             durationByDifficulty: {
                 easy:    120,
                 medium:  480,

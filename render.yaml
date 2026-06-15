@@ -1,0 +1,61 @@
+# RedString — Render Blueprint
+# ===============================
+# Deploys the backend Express + Socket.io server to Render.
+#
+# Usage:
+#   1. Push this repo to GitHub/GitLab.
+#   2. In Render dashboard: New → Blueprint → connect this repo.
+#   3. Render reads this file and provisions the service automatically.
+#   4. After creation, fill in the "sync: false" env vars in the
+#      Render dashboard (Settings → Environment) — these are secrets
+#      that shouldn't live in this file.
+#
+# Render's free tier:
+#   - Spins down after 15 min of inactivity (cold start ~30-60s on next request)
+#   - 750 free instance-hours/month
+#   - No persistent disk — fine here since MongoDB/Redis are external (Atlas/Upstash)
+
+services:
+  - type: web
+    name: redstring-api
+    runtime: node
+    plan: free
+    region: singapore          # change to a region close to your users
+    branch: main
+    rootDir: .              # repo root (server/ lives here)
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000          # Render overrides this via its own PORT env var
+
+      # ── Secrets — set these in the Render dashboard, not here ──
+      - key: MONGO_URI
+        sync: false           # MongoDB Atlas connection string
+      - key: REDIS_HOST
+        sync: false           # Upstash Redis host
+      - key: REDIS_PORT
+        sync: false           # Upstash Redis port (often 6379 or custom TLS ports)
+      - key: REDIS_PASSWORD
+        sync: false           # Upstash Redis password
+      - key: REDIS_TLS
+        value: "true"          # Upstash requires TLS
+      - key: JWT_SECRET
+        sync: false           # generate with: node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+      - key: FRONTEND_URL
+        value: https://redstring-nine.vercel.app
+
+      # ── Firebase (push notifications) ──
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+
+      # ── Anthropic (AI dialogue engine) ──
+      - key: ANTHROPIC_API_KEY
+        sync: false

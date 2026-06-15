@@ -7,13 +7,16 @@
     "userInterfaceStyle": "dark",
     "icon": "./assets/icon.png",
     "backgroundColor": "#0A0A0C",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.redstring.app",
       "infoPlist": {
         "NSMicrophoneUsageDescription": "RedString uses your microphone for War Room voice chat with other investigators.",
-        "NSCameraUsageDescription": "RedString may use your camera for AR evidence scanning features."
+        "NSCameraUsageDescription": "RedString may use your camera for AR evidence scanning features.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -51,6 +54,11 @@
           "color": "#F5C842"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2c81ea7b-3b5a-4ca8-a6fa-3fa1fdc6dbeb"
+      }
+    }
   }
 }

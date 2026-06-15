@@ -29,7 +29,7 @@ import { useGameStore } from '../store/gameStore';
 import { useAuthStore } from '../store/authStore';
 import { apiClient } from '../services/apiClient';
 import { connectWarRoom, disconnectWarRoom, warRoom } from '../services/socketService';
-import { WeatherBadge, ConnectionDot } from '../components/hud/HUDComponents';
+import { WeatherBadge, ConnectionDot } from '../components/hud/SceneHUD';
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
 const BOARD_W = SCREEN_W * 2;

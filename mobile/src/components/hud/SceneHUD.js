@@ -1,12 +1,28 @@
 /**
- * RedString — HUD & Scene Components
- * =====================================
- * All the overlay/HUD components used on the Crime Scene screen.
+ * RedString — WeatherBadge & ConnectionDot (paste into SceneHUD.js)
+ * ====================================================================
+ * These two components are imported by src/screens/WarRoomScreen.js
+ * but are missing from src/components/hud/SceneHUD.js.
  *
- *  WeatherHUD — small pill showing current weather + effects
- *  JumpScareOverlay — full-screen flash + scare text
- *  TwistModal — cinematic reveal for narrative twists
- *  ClueDetailModal — expanded clue view + lab submit option
+ * ─────────────────────────────────────────────────────────
+ *  INSTRUCTIONS
+ * ─────────────────────────────────────────────────────────
+ * 1. Open src/components/hud/SceneHUD.js
+ *
+ * 2. Update the theme import on line 21 from:
+ *
+ *      import { Colors, Spacing, Radii, Animations as AnimDurations } from '../../config/theme';
+ *
+ *    to:
+ *
+ *      import { Colors, Typography, Spacing, Radii, Animations as AnimDurations } from '../../config/theme';
+ *
+ *    (just adds `Typography` to the existing import — nothing removed)
+ *
+ * 3. Paste everything below this comment block anywhere in the file
+ *    after the imports (e.g., right after line 21, or at the end
+ *    of the file — doesn't matter, JS hoists function declarations).
+ * ─────────────────────────────────────────────────────────
  */
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -22,36 +38,82 @@ import { Colors, Spacing, Radii, Animations as AnimDurations } from '../../confi
 
 const { width: W, height: H } = Dimensions.get('window');
 
-// ─────────────────────────────────────────────
-//  WEATHER HUD
-// ─────────────────────────────────────────────
 
+// ─────────────────────────────────────────────
+//  WEATHER BADGE
+// ─────────────────────────────────────────────
 const WEATHER_ICONS = {
-    clear:        { icon: 'sunny-outline',      color: Colors.amber.bright },
-    night:        { icon: 'moon-outline',        color: '#7B8CDE' },
-    dawn:         { icon: 'partly-sunny-outline',color: Colors.amber.mid },
-    dusk:         { icon: 'partly-sunny-outline',color: '#E87A3A' },
-    sudden_rain:  { icon: 'rainy-outline',       color: Colors.blue.bright },
-    storm:        { icon: 'thunderstorm-outline',color: Colors.blue.bright },
-    dense_fog:    { icon: 'cloud-outline',       color: Colors.text.muted },
+    clear: '☀️', rain: '🌧', sudden_rain: '🌧', storm: '⛈',
+    dense_fog: '🌫', night: '🌙', dawn: '🌅', dusk: '🌆',
 };
 
-export function WeatherHUD({ weather }) {
-    const wIcon = WEATHER_ICONS[weather.condition] || WEATHER_ICONS.clear;
-    const hasEffects = weather.activeEffects?.length > 0;
+export function WeatherBadge({ weather, compact = false }) {
+    const condition = weather?.condition || 'clear';
+    const icon = WEATHER_ICONS[condition] || '☀️';
+
+    if (compact) {
+        return (
+            <View style={badgeStyles.compact}>
+                <Text style={badgeStyles.compactIcon}>{icon}</Text>
+            </View>
+        );
+    }
 
     return (
-        <View style={[hudStyles.weatherPill, hasEffects && hudStyles.weatherPillWarning]}>
-            <Ionicons name={wIcon.icon} size={13} color={wIcon.color} />
-            <Text style={[hudStyles.weatherText, { color: wIcon.color }]}>
-                {weather.condition.replace('_', ' ')}
+        <View style={badgeStyles.full}>
+            <Text style={badgeStyles.icon}>{icon}</Text>
+            <Text style={badgeStyles.label}>
+                {condition.replace(/_/g, ' ').toUpperCase()}
             </Text>
-            {weather.temperature != null && (
-                <Text style={hudStyles.weatherTemp}>{weather.temperature}°</Text>
+            {weather?.temperature != null && (
+                <Text style={badgeStyles.temp}>{Math.round(weather.temperature)}°</Text>
             )}
         </View>
     );
 }
+
+const badgeStyles = StyleSheet.create({
+    compact: {
+        width: 28, height: 28, borderRadius: 14,
+        backgroundColor: Colors.bg.raised, alignItems: 'center', justifyContent: 'center',
+        borderWidth: 1, borderColor: Colors.border.subtle,
+    },
+    compactIcon: { fontSize: 13 },
+    full: {
+        flexDirection: 'row', alignItems: 'center', gap: 4,
+        backgroundColor: Colors.bg.raised, borderRadius: Radii.full,
+        paddingHorizontal: Spacing.sm, paddingVertical: 4,
+        borderWidth: 1, borderColor: Colors.border.subtle,
+    },
+    icon: { fontSize: 12 },
+    label: {
+        fontFamily: Typography.mono.family, fontSize: 9,
+        color: Colors.text.secondary, letterSpacing: 1,
+    },
+    temp: {
+        fontFamily: Typography.mono.familyMedium, fontSize: 9,
+        color: Colors.text.muted,
+    },
+});
+
+// ─────────────────────────────────────────────
+//  CONNECTION DOT
+// ─────────────────────────────────────────────
+export function ConnectionDot({ online }) {
+    return (
+        <View style={[dotStyles.dot, online ? dotStyles.online : dotStyles.offline]} />
+    );
+}
+
+const dotStyles = StyleSheet.create({
+    dot: {
+        position: 'absolute', bottom: -2, right: -2,
+        width: 9, height: 9, borderRadius: 5,
+        borderWidth: 2, borderColor: Colors.bg.surface,
+    },
+    online:  { backgroundColor: Colors.success },
+    offline: { backgroundColor: Colors.text.muted },
+});
 
 // ─────────────────────────────────────────────
 //  JUMP SCARE OVERLAY

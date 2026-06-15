@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+mobile/node_modules/
+
+# Environment secrets - NEVER commit these
+.env
+backend/.env
+mobile/.env
+
+# Expo / React Native
+mobile/.expo/
+mobile/android/
+mobile/ios/
+mobile/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.idea/
+.DS_Store
+
+# Build outputs
+dist/
+build/

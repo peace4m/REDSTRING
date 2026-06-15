@@ -16,7 +16,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, Dimensions, Text } from 'react-native';
 import Svg, { Line, Defs, RadialGradient, Stop, Rect } from 'react-native-svg';
-import { Colors, Typography, Spacing, Radii } from '../../theme';
+import { Colors, Typography, Spacing, Radii } from '../../config/theme';
 
 const { width: W, height: H } = Dimensions.get('window');
 

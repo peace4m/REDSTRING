@@ -1,0 +1,48 @@
+# Redstring — Docker Compose (local development)
+# Run: docker-compose up -d
+# This starts MongoDB + Redis locally so you don't need to install them.
+# The Node.js server itself runs with: npm run dev
+
+version: '3.9'
+
+services:
+
+  # ── MongoDB ─────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: redstring-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INIT DB_DATABASE: redstring
+    volumes:
+      - mongo_data:/data/db
+
+  # ── Redis ────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: redstring-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --append only yes
+
+  # ── Redis Commander (optional UI) ────────────
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redstring-redis-ui
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    profiles: ["tools"]  # Only starts with: docker-compose --profile tools up
+
+volumes:
+  mongo_data:
+  redis_data:

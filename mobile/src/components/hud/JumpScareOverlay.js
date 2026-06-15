@@ -19,7 +19,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, Vibration } from 'react-native';
 import { Audio } from 'expo-av';
-import { Colors, Typography, Spacing, Animations } from '../../theme';
+import { Colors, Typography, Spacing, Animations } from '../../config/theme';
 import { apiClient } from '../../services/apiClient';
 
 // Map scare keys to local sound assets (place files in assets/audio/scares/)

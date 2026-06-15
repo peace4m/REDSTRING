@@ -11,8 +11,8 @@
  *
  * Typography:
  *  Display: "Courier Prime" — typewriter feel, case file aesthetic
- *  Body:    "Inter"         — clean readability in low light
- *  Data:    "JetBrains Mono"— clue IDs, timestamps, forensic data
+ *  Body: "Inter" — clean readability in low light
+ *  Data: "JetBrains Mono"— clue IDs, timestamps, forensic data
  *
  * Signature element:
  *  The corkboard. All evidence is pinned to a real cork texture.
