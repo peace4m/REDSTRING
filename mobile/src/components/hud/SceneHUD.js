@@ -11,7 +11,7 @@
  *
  * 2. Update the theme import on line 21 from:
  *
- *      import { Colors, Spacing, Radii, Animations as AnimDurations } from '../../config/theme';
+ *      import { Colors, Typography, Spacing, Radii, Animations as AnimDurations } from '../../config/theme';
  *
  *    to:
  *
@@ -34,7 +34,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
-import { Colors, Spacing, Radii, Animations as AnimDurations } from '../../config/theme';
+import { Colors, Typography, Spacing, Radii, Animations as AnimDurations } from '../../config/theme';
 
 const { width: W, height: H } = Dimensions.get('window');
 

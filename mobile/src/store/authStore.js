@@ -5,7 +5,7 @@
  */
 
 import { create } from 'zustand';
-import * as SecureStore from 'expo-secure-store';
+import { storage } from '../services/storage';
 import { apiClient } from '../services/apiClient';
 
 export const useAuthStore = create((set, get) => ({
@@ -17,8 +17,8 @@ export const useAuthStore = create((set, get) => ({
     // ── Boot: restore session from secure storage ──
     initAuth: async () => {
         try {
-            const token = await SecureStore.getItemAsync('accessToken');
-            const userRaw = await SecureStore.getItemAsync('user');
+            const token = await storage.getItem('accessToken');
+            const userRaw = await storage.getItem('user');
             if (token && userRaw) {
                 const user = JSON.parse(userRaw);
                 apiClient.setToken(token);
@@ -34,9 +34,9 @@ export const useAuthStore = create((set, get) => ({
         set({ isLoading: true, error: null });
         try {
             const { user, accessToken, refreshToken } = await apiClient.post('/auth/login', { email, password });
-            await SecureStore.setItemAsync('accessToken',  accessToken);
-            await SecureStore.setItemAsync('refreshToken', refreshToken);
-            await SecureStore.setItemAsync('user',         JSON.stringify(user));
+            await storage.setItem('accessToken',  accessToken);
+            await storage.setItem('refreshToken', refreshToken);
+            await storage.setItem('user',         JSON.stringify(user));
             apiClient.setToken(accessToken);
             set({ user, isLoggedIn: true, isLoading: false });
         } catch (err) {
@@ -50,9 +50,9 @@ export const useAuthStore = create((set, get) => ({
         set({ isLoading: true, error: null });
         try {
             const { user, accessToken, refreshToken } = await apiClient.post('/auth/register', data);
-            await SecureStore.setItemAsync('accessToken',  accessToken);
-            await SecureStore.setItemAsync('refreshToken', refreshToken);
-            await SecureStore.setItemAsync('user',         JSON.stringify(user));
+            await storage.setItem('accessToken',  accessToken);
+            await storage.setItem('refreshToken', refreshToken);
+            await storage.setItem('user',         JSON.stringify(user));
             apiClient.setToken(accessToken);
             set({ user, isLoggedIn: true, isLoading: false });
         } catch (err) {
@@ -64,9 +64,9 @@ export const useAuthStore = create((set, get) => ({
     // ── Logout ─────────────────────────────────────
     logout: async () => {
         try { await apiClient.post('/auth/logout'); } catch {}
-        await SecureStore.deleteItemAsync('accessToken');
-        await SecureStore.deleteItemAsync('refreshToken');
-        await SecureStore.deleteItemAsync('user');
+        await storage.deleteItem('accessToken');
+        await storage.deleteItem('refreshToken');
+        await storage.deleteItem('user');
         apiClient.setToken(null);
         set({ user: null, isLoggedIn: false });
     },

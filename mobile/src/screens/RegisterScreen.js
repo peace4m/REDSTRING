@@ -91,19 +91,41 @@ export default function RegisterScreen({ navigation }) {
 
                 <View style={s.field}>
                     <Text style={s.label}>DATE OF BIRTH</Text>
-                    <TouchableOpacity style={s.input} onPress={() => setShowPicker(true)}>
-                        <Text style={{ color: dob ? Colors.text.primary : Colors.text.muted, fontFamily: Typography.body.family }}>
-                            {dob ? dob.toLocaleDateString() : 'Select your date of birth'}
-                        </Text>
-                    </TouchableOpacity>
-                    {showPicker && (
-                        <DateTimePicker
-                            value={dob || new Date(2000, 0, 1)}
-                            mode="date"
-                            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                            maximumDate={new Date()}
-                            onChange={(_, date) => { setShowPicker(Platform.OS === 'ios'); if (date) setDob(date); }}
+                    {Platform.OS === 'web' ? (
+                        <input
+                            type="date"
+                            max={new Date().toISOString().split('T')[0]}
+                            value={dob ? dob.toISOString().split('T')[0] : ''}
+                            onChange={(e) => { if (e.target.value) setDob(new Date(e.target.value)); }}
+                            style={{
+                                backgroundColor: Colors.bg.surface,
+                                borderRadius: 8,
+                                borderWidth: 1,
+                                borderColor: Colors.border.regular,
+                                padding: 14,
+                                fontFamily: Typography.body.family,
+                                fontSize: 15,
+                                color: Colors.text.primary,
+                                colorScheme: 'dark',
+                            }}
                         />
+                    ) : (
+                        <>
+                            <TouchableOpacity style={s.input} onPress={() => setShowPicker(true)}>
+                                <Text style={{ color: dob ? Colors.text.primary : Colors.text.muted, fontFamily: Typography.body.family }}>
+                                    {dob ? dob.toLocaleDateString() : 'Select your date of birth'}
+                                </Text>
+                            </TouchableOpacity>
+                            {showPicker && (
+                                <DateTimePicker
+                                    value={dob || new Date(2000, 0, 1)}
+                                    mode="date"
+                                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                                    maximumDate={new Date()}
+                                    onChange={(_, date) => { setShowPicker(Platform.OS === 'ios'); if (date) setDob(date); }}
+                                />
+                            )}
+                        </>
                     )}
                 </View>
 

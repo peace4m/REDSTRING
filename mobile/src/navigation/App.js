@@ -224,7 +224,7 @@ export default function App() {
         if (fontsLoaded) SplashScreen.hideAsync();
     }, [fontsLoaded]);
 
-    if (!fontsLoaded) return null;
+    // Render even if fonts haven't loaded yet — avoids permanent blank screen
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>

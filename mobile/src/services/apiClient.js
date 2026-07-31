@@ -8,7 +8,7 @@
  *  - Consistent error format
  */
 
-import * as SecureStore from 'expo-secure-store';
+import { storage } from './storage';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:4000/api';
 
@@ -62,7 +62,7 @@ class ApiClient {
     async refreshToken() {
         try {
             this.refreshing = true;
-            const refreshToken = await SecureStore.getItemAsync('refreshToken');
+            const refreshToken = await storage.getItem('refreshToken');
             if (!refreshToken) return false;
 
             const res = await fetch(`${BASE_URL}/auth/refresh`, {
@@ -73,8 +73,8 @@ class ApiClient {
             const data = await res.json();
             if (!res.ok) return false;
 
-            await SecureStore.setItemAsync('accessToken', data.accessToken);
-            await SecureStore.setItemAsync('refreshToken', data.refreshToken);
+            await storage.setItem('accessToken', data.accessToken);
+            await storage.setItem('refreshToken', data.refreshToken);
             this.token = data.accessToken;
             return true;
         } catch { return false; }
